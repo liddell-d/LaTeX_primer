@@ -1,0 +1,117 @@
+\section{Commands, Declarations, and Environments}
+
+These special characters are commands in their own right: \verb2\ ~ ^ < >2 \verb2{ } # & _2 {\ttfamily \$ \%}. Some of these characters have already been mentioned and will be described further. For example, the {\ttfamily \%} character could be thought of as a command unto itself when used for a comment. When this is done, everything from this character to the end of a line in the source document is ignored during the typesetting process. A backslash prefixing any of the characters \verb2{ } # & _2 {\ttfamily \$~\%} escapes their special status, but it doesn't for the other special characters.
+
+\subsection{Named Commands}
+
+Named commands have a \verb2\2 followed by a string that is the name. 
+
+Most named commands take arguments in braces \verb2{}2 or brackets \verb2[]2, but some do not, like ``\verb2\LaTeX 2''. The trailing space character acts as a delimiter and does not survive the typesetting process. So, as mentioned previously, the space character must be escaped with a backslash to preserve it (making it a forced space).
+
+The simplest form of command having an argument set is \verb2\<name>{<text>}2, where \verb2<text>2 is required. The argument could be text that is printed, or it could be a definition of a value of some kind. The braces define the scope of the command.
+
+Some commands have more than one set of required arguments. As an example, this command controls numerous measurement settings:
+
+\ind\verb2\setlength{\<name>}{<measure>}2
+
+The \verb2<name>2 is the length parameter to set, like the page width or margin. Two common length parameters are \verb2\parskip2 and \verb2\parindent2, which govern paragraph spacing and indentation (and also happen to be commands).
+
+The \verb2<measure>2 is a value or expression. The units must be given for the measure. The units in, cm, mm, pt~(point), and pc~(pica) are commonly used, and these measurement units apply to spacings referred to throughout this document.
+
+Some commands support optional arguments enclosed in brackets \q\verb2[<args>]...2\q\,. There may be more than one set of these. The optional arguments precede the mandatory ones appearing in braces.
+
+Some command names can have an asterisk \q*\q\ appended to them, thus giving a new name for a command. These commands behave somewhat differently than the ones without asterisks. This often has something to do with whitespace management, but there are other variations as well.
+
+There are many built-in commands. The existing set in your \LaTeX\ environment can be further expanded by loading packages, as mentioned previously. 
+
+Commands can also be user-defined in this form:
+
+\ind\verb2\newcommand{<name>}{<existing_commands>}2
+
+This is a simpler form of the command. The \verb2<name>2 is the user name for the command. The \verb2<existing_commands>2 are previously defined commands (either built-in or user-defined) that are executed as part of the new command. A more complicated form exists for arguments containing variables, such as this one:
+
+\ind\verb2\newcommand{\vect}[3]{\ensuremath{2\#\verb21_2\#\verb32,\ldots,3\#\verb21_2\#\verb23}}2
+
+\newcommand{\vect}[3]{\ensuremath{#1_#2,\ldots,#1_#3}}
+
+Don't worry about understanding \verb2\ensuremath2 and \verb2\ldots2, just concentrate on the variable calls indicated by the \# symbols.
+
+The \verb2\vect2 command takes three arguments that are passed as variables \#1, \#2, and \#3: a variable name, an initial index name, and a terminal index name. With the call \verb2\vect{u}{i}{n}2 in the source document, this appears in the generated output: \vect{u}{i}{n}
+
+The \verb2\renewcommand2 command takes the same syntactical form as  \verb2\newcommand2 and redefines an existing command. With \verb2\renewcommand2, we can redefine the previous command to assume a default variable name $x$ if one isn't provided explicitly in a call to the command:
+
+\ind\verb2 \renewcommand{\vect}[3][x]{\ensuremath{2\#\verb21_2\#\verb32,\ldots,3\#\verb21_2\#\verb23}}2
+
+\renewcommand{\vect}[3][x]{\ensuremath{#1_#2,\ldots,#1_#3}}
+
+So with the call \verb2\vect{1}{n}2, we get this: \vect{1}{n}
+
+\subsection{Declarations}
+
+Declarations are commands that simply have names: \verb2\<name>2. Declarations affect how printed text appears and remain in effect until overridden by another declaration, or the scope of the current environment terminates the declaration's effect. More on environments and scope later.
+
+An example declaration is \verb2\itshape2, which causes italics to be used in printed text until overridden.
+
+In order to show special characters or command names literally (without having them interpreted during typesetting), the \verb2\verb2 declaration is useful. The general form is this:
+
+\ind\verb2\verb<delimiter><text><delimiter>2
+
+where the \verb2<delimiter>2 is a character that is not a letter or special to the system. (This is atypical of declarations, which generally have no delimiters defining their scopes.) The \verb2<text>2 is what you want printed verbatim. The text appears in monospace font, and automatic line wrapping within the text block is disabled. (The \emph{shortvrb} package allows definition of a delimiter for verbatim text using the \verb2\MakeShortVerb{\<char>}2 command, where the \verb2<char>2 is a character---often \q \verb2|2\q. The \verb2\DeleteShortVerb2 command removes the status of the character.) 
+
+Declarations have one more distinguishing feature: their names can be used (without the leading \verb2\2) to define environments, which are discussed next.
+
+\subsection{Environments}
+
+Environments are scoped blocks of text that are rendered according to the environment command parameters. An environment begins with \verb2\begin{<name>}2 and ends with \verb2\end{<name>}2. The environment \verb2\begin{document}2 and \verb2\end{document}2 is an example we've seen already. 
+
+When a declaration name is used in an environment, the behavior of the declaration applies within the scope of the environment, not outside of it. Environments may be nested when it makes sense to do so.
+
+Simply using braces \verb2{...}2 without a preceding name produces a nameless environment. The braces determine the environment's scope. This form has certain useful applications like limiting the scopes of declarations appearing in the environment. If using a nameless environment, then the initial \verb2\2 of a declaration must be present after the \verb2{2 character. 
+	
+There are many built-in environment commands, but you can also create your own. Custom environments are useful when you have numerous commands used together to achieve a certain effect employed often throughout a document.
+
+The syntax for custom user environments is similar to user declarations:
+
+\begin{verbatim}
+   \newenvironment{<name>}[<arg_count>][<arg1_default>]
+   {<begin>}
+   {<end>}
+\end{verbatim}
+
+The \verb2<name>2 is the name of the environment. The \verb2<begin>2 block defines what gets printed when the \verb2\begin2 command of the environment is executed. The \verb2\end2 command in the \verb2<end>2 block concludes the scope of a \verb2\begin2 command. 
+
+The user-defined environment call may optionally have arguments, and the count of the arguments is \verb2<arg_count>2. No arguments may appear in the \verb2<end>2 block. Like user declarations, the first argument can have a default value \verb2<arg1_default>2 if the first argument is omitted. The \verb2\renewenvironment2 command has the same arguments and redefines an existing environment.
+
+Here is an extended example that uses some commands that haven't been discussed. Just concentrate on the basic form of the \verb2\newenvironment2 command:
+
+\begin{verbatim}
+   \newsavebox{\comname}
+   \newcounter{com}
+   \newenvironment{newcomment}[1]
+   {\rule{2cm}{1pt}\stepcounter{com}\begin{sloppypar}\noindent
+   \slshape
+   Comment (\arabic{com}): #1
+   \begin{quote}\small\itshape} 
+   {\end{quote}\end{sloppypar}}   
+\end{verbatim}
+
+\newsavebox{\comname}
+\newcounter{com}
+\newenvironment{newcomment}[1]
+{\rule{2cm}{1pt}\stepcounter{com}\begin{sloppypar}\noindent
+		\slshape
+		Comment (\arabic{com}): #1
+		\begin{quote}\small\itshape} 
+		{\end{quote}\end{sloppypar}}  
+
+This call in the source code: \begin{verbatim} 
+   \begin{newcomment}{A reviewer}
+   A comment.
+   \end{comment}
+\end{verbatim}
+
+renders this after typesetting:
+
+\begin{newcomment}{A reviewer}
+A comment.
+\end{newcomment}

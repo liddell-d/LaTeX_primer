@@ -1,0 +1,61 @@
+\section{Importing Graphics}
+
+Graphics importation has some complexities that are driven by the desired output format, which affects which compiler to use for generating the output. For this document, we assume the output is PDF and PdfLaTeX is used for the compiler.
+
+There are two packages to choose from to enable graphics importation: {\itshape graphics} and {\itshape graphicx}. Each one supports a different syntax, but both have the same capabilities. Which one you use is a matter of choice.
+
+These packages support a number of options. Perhaps the most useful option is `draft', which causes graphics not to be imported. This can help performance, but more importantly, it shows the bounding box that the imported figure will occupy. This can assist in fine-tuning the position and scaling of the imported figure.
+
+For the {\itshape graphicx} package, the command to import figures is this:
+
+\begin{alltt}
+	\ind\verb2\includegraphics2\q[\q<key>=<value>[,<key>=<value>...]\q]\q{<file>}
+\end{alltt}
+
+There are many supported key-value pairs. The more frequently used ones are `draft=true' and `scale={\itshape factor}'. The draft option is the same as discussed previously. The scale option takes a positive factor by which to magnify or shrink the imported graphic.
+
+PdfLaTeX supports JPEG, PNG, and PDF imported images. Interestingly, it does not support postscript formats.
+
+To float a figure, a similar structure is used as was discussed under the Tables section:
+
+\begin{alltt}
+	\ind\verb2\begin{figure}2\q[\q[h][t][b][p]\q]\q 
+		\ind\verb2  \includegraphics2\q[\q<key>=<value>[,<key>=<value>...]\q]\q{<file>}
+		\ind\verb2  [\caption[<short_title>]{<caption_text>}]2
+		\ind\verb2\end{figure}2
+\end{alltt}
+
+Here is an imported PNG file:
+
+\hspace{2.25in}\includegraphics[scale=0.5]{test.png}
+
+\section{Defining and Using Color}\label{sec:color}
+
+For all \LaTeX\ compilers, the colors black, blue, cyan, green, magenta, red, white, and yellow are pre-defined and may be called by name. Other colors may be declared with this command:
+
+\begin{alltt}
+\ind\verb2\definecolor2\q\{\q<name>\q\}\{{\q}rgb | cmyk\q\}\{\q<spec>\q\}\q
+\end{alltt}
+
+The \verb2<name>2 is the name of the color. The \verb2\<spec>2 is a comma-delimited list of floating-point numbers on the interval $[$0, 1$]$. If the the rgb model is used, three numbers stand for the percentage of red, green, and blue in the color, respectively. If the cmyk model is used, then four numbers stand for the percentage of cyan, magenta, yellow, and black in the color. (For the rgb model, a spec value of 0.004 is roughly equivalent to 1 unit of color on the 255 scale.)
+
+The following commands use color. The presentation here assumes a color name is used, but the specification \verb2{rgb | cmyk}{<spec>}2 may be used instead.
+
+\begin{tabular}{ll}
+\textsf{Command}                           & \textsf{Description}\\
+\hline\\[-8pt]
+\verb2\color{<color>}2                     & sets current text color.\\
+\verb2\colorbox{<color>}{<text>}2          & sets text in a box with the \\
+                                           & color as background.\\
+\verb3\fcolorbox{<clr1>}{<clr2>}{<text>}3  & sets text in a box with a \\
+                                           & frame of color clr1 and a \\
+                                           & background of color clr2.\\
+\verb2\normalcolor2                        & sets color to the one active \\
+                                           & at the end of the preamble. \\
+\verb2\pagecolor{<color>}2                 & sets page background color.\\
+\verb2\textcolor{<color>}{<text>}2         & prints the text using the color. 
+\end{tabular}
+
+\definecolor{seagreen}{rgb}{0.7,1,0.7}
+
+\hspace{2.125in}\colorbox{seagreen}{An example {\ttfamily $\backslash$colorbox}.}

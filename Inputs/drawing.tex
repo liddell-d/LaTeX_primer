@@ -1,0 +1,101 @@
+\section{Drawing}
+
+\LaTeX\ offers a {\itshape picture} environment for basic drawings, many of which we will describe here. 
+
+Drawings in the {\itshape picture} environment are based upon a coordinate system. The unit of length is given by this command:
+
+\ind\verb2\setlength{\unitlength}{<unit>}2
+
+The \verb2<unit>2 is a number followed by some unit like mm, cm, in, and so on. The default unit is 1pt. Changing units of an existing figure changes the scale of how it is rendered. It is not permitted to use more than one unit length for a picture, but the unit length can be different for different pictures.
+
+The {\itshape picture} environment syntax is this:
+
+\begin{verbatim}
+  \begin{picture}{<length>,<width>}
+  <picture_commands>
+  \end{picture}
+\end{verbatim}
+
+The length and width parameters are in units of the \verb2\unitlength2 and define the extent of the drawing. So it's good to know the dimensions of the sheets you plan to use. The extent of the picture is centered on the page by default (this can be overridden by giving an offset). The lower left corner of the picture extent is the origin of the picture's coordinate system. Negative coordinate values are permitted, but it tends to be helpful to work in first quadrant coordinates. In general, the system does not prevent you from crossing the boundaries of the frame or the page margins.
+
+Picture, font style, size, \verb2\thicklines2, and \verb2\thinlines2 commands are the only ones allowed in the picture environment. \verb2\thinlines2 is the default for weight of drawn lines.   
+
+Picture commands come in two forms:
+
+\begin{verbatim}
+  \put(<x>,<y>){<element>}
+  \multiput(<x>,<y>)(<dx>,<dy>){<n>}{<element>}
+\end{verbatim}
+
+These are required to place the specified picture element at the stated coordinates. In the case of \verb2\multiput2, the element is repeated an integer \q n\q\ number of times (the first placement is included in the count) and placed with the specified \verb2<dx><dy>2 offsets from the last location at each iteration.
+
+The following are graphics elements examples. See {\itshape Inputs/graphics.tex} for the code.
+
+% this induces a bad \vbox 
+\input{Inputs/graphics}
+
+Notice in the figure that the system doesn't prevent the labels from overflowing a box or the page margins (it doesn't even ensure that an object is on the page). 
+
+The following commands all make boxes with text in them and can be used in the \verb2\put2\mbox{-}type commands: \begin{verbatim}
+  \dashbox{<dash_length>}(<width>,<height>)[<loc>]{<text>}
+  \framebox(<width>,<height>)[<loc>]{<text>}
+  \makebox(<width>,<height>)[<loc>]{<text>}
+\end{verbatim}
+
+The first command creates a dashed border. The second a continuous border. The third has no border. The figure shows some examples of the second. For greater control, the \verb2\makebox2 command is frequently used with (0,0) width and height to place text centered at a location.
+
+Text is all on one line and is centered by default. The \verb2<loc>2 parameter has these possibilities for changing text location in the box:
+
+\qquad b -- bottom
+
+\qquad t -- top
+
+\qquad l -- left
+
+\qquad r -- right
+
+\qquad s -- stretch the text horizontally to fill the box
+
+These can be combined in pairs (that don't contradict each other) to combine effects.
+
+There also is a set of commands that allow saving and re-using boxes:
+
+\begin{verbatim}
+  \newsavebox{\<boxname>} % initiates a box definition.
+  \sbox{\<boxname>}{<text in box>} % simple form
+  \savebox{\<boxname>}[<width>][l|r|s]{<text>} % fancy form; 
+                                  % default is centered text
+  \usebox{\boxname} % place a defined box whenever you like
+\end{verbatim}
+
+The syntax of \verb2\savebox2 might be extended in the same way as the previously mentioned box commands.
+
+Line segments and directed segments (or vectors) are specified with these commands: \begin{verbatim}
+  \line(<dx>,<dy>){<length>}
+  \vector(<dx>,<dy>){<length>}
+\end{verbatim}
+
+The \verb2<dx><dy>2 parameters give the slope. The dx and dy values must conform to these criteria: integers on the interval [-6,\,6], and they must be relatively prime. The length must be at least 10\,pt (3.5\,mm) for a segment or vector that isn't horizontal or vertical. For horizontal or vertical objects, the length is self-explanatory. For oblique objects, the length is that of the projection of the object on the x-axis.
+
+Circles are specified with these commands: \begin{verbatim}
+  \circle{<diameter>}
+  \circle*{<diameter>}
+\end{verbatim}
+
+The diameter is self-explanatory. The * version of the command creates a solid circle rather as opposed to a perimeter. The placement of the circle is based on its center.
+
+Ovals are specified with this command:
+
+\ind\verb2\oval(<length>,<width>)[<quadrant>]2
+
+The \verb2<length>2 and \verb2<width>2 parameters give the dimensions of the horizontal and vertical axes of the oval. The optional \verb2<quadrant>2 takes these values:
+
+\qquad b -- bottom
+
+\qquad t -- top
+
+\qquad l -- left
+
+\qquad r -- right
+
+and controls which part of the oval is printed. These can be combined in pairs (that don't contradict each other) to combine effects.

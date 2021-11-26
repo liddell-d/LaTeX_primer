@@ -1,0 +1,54 @@
+\section{Space Characters and Punctuation}
+
+Within the main body of the source document's code, space characters are handled specially. As this behavior is important to understand and can result in some initial confusion, we will explain it first.
+
+Here is a synopsis of space types:
+
+\begin{tabular}{rl}
+\textsf{Space Characters} & \textsf{Description}\\
+\hline\\[-8pt]
+(without quotes)\hspace{10pt}\q\ \q & normal space character, repetitions ignored. \\
+
+(without quotes) \q\verb2\2\ \q     & forced space (note trailing space         character). frequently used\\
+                                    & after command names, which usually suppress trailing \\
+                                    & spaces (e.g., \verb2\mycommand\ 2). \\
+
+\verb2~2\                           & non-breaking. suppresses line wrapping between words.\\
+
+\verb2\,2\                          & small. roughly\,half\,a\,normal\,space.\\	
+
+\verb2\@2\                          & following capital letter and preceding a\\
+                                    & period to get normal spacing (e.g., \verb2CD\@.2). 
+\end{tabular}
+
+Multiple adjacent space characters count as one space. Leading spaces on a line are ignored. 
+
+Spaces terminating a command name are removed. Sometimes this requires forcing a space with \q\verb2\2\ \q\ immediately following a command to get the desired effect. 
+
+The end of a line is treated as a space character, which is fine most of the time. To suppress this, use a comment character \q\%\q\ at the end of the line.
+
+A period preceded by a lowercase letter is interpreted as the end of a sentence, which gets additional spacing. To override this, use \q\verb2\2\ \q\ or \q\verb2~2\q\ to manage the space. A capital letter before a period is not handled as the typical end of a sentence. To get the usual spacing when a capital letter ends a sentence, you must follow the capital letter with \q\verb2\@2\q.
+
+For the most part, punctuation marks behave intuitively. The handling of spacing following the period can be a bit troublesome in certain cases as mentioned in the previous paragraph. 
+
+A few other marks that can cause some initial confusion are shown in the following table.
+
+\begin{tabular}{rl}
+\textsf{Characters} & \textsf{Type}\\
+\hline\\[-8pt]
+\verb2` 2\q         & `single quotes' (back-tic then apostrophe)\\
+
+\verb2`` 2\q\q      & ``double quotes'' (just doubled single quotes)\\
+
+\verb2-2            & hyphen -\\
+
+\verb2--2           & en-dash --\\
+
+\verb2---2          & em-dash ---\\
+
+\verb2$-$2          & minus $-$
+\end{tabular}
+
+Hyphenation at line breaks is handled automatically by the tool, but there can be cases where it doesn't do the correct thing. In such cases, \q\verb2\-2\q\ can be used to induce a hyphen, but this doesn't force one. Also, this is a piecemeal solution that's only convenient when used a few times. If you have a list of words for which you want to provide hyphenations, this can be done in the source document preamble using the \verb2\hyphenation{<word list>}2 command.
+
+A non-breaking hyphen is specified as \verb2\mbox{-}2.

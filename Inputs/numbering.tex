@@ -1,0 +1,42 @@
+\newpage
+
+\section{Numbering}
+
+Numerous elements have counters associated with them, such as sections, paragraphs, pages, footnotes, and so on. These counters can be manipulated. Custom counters can also be created. The following commands control counters.
+
+\begin{tabular}{ll}
+	\textsf{Command}                         & \textsf{Description}\\
+	\hline\\[-8pt]
+	\verb2\newcounter{<name>}[<in_counter>]2 & defines a new counter and sets\\ 
+	                                         & its value to 0.\\
+	                                         & \verb2<in_counter>2 associates the\\  
+	                                         & incrementing of the new \\  
+	                                         & counter with an existing one.\\
+	\verb2\addtocounter{<name>}{<value>}2    & adds a numeric value to a\\
+	                                         & counter. \\
+	\verb2\stepcounter{<name>}2              & increments a counter and resets all\\
+	                                         & counters associated with it to 0.\\
+	\verb2\refstepcounter{<name>}2           & works like \verb2\stepcounter2 but\\
+	                                         & also makes the referenced counter\\
+	                                         & the current counter for the\\
+	                                         & \verb2\label2 command.
+\end{tabular}
+
+Here is some source code that shows how \verb2\refstepcounter2 works:
+
+\begin{verbatim}
+   \newcounter{test}
+   \addtocounter{test}{99}
+   \refstepcounter{test}\label{foo}
+   Counter value: \thetest
+\end{verbatim}
+
+\newcounter{test}
+\addtocounter{test}{99}
+\refstepcounter{test}\label{foo}
+
+Counter value: \thetest
+
+The \verb2\ref{foo}2 value of the label is \ref{foo}.
+
+If you place the label inside some special context like a caption within a table or figure, then the referenced counter value may not be that of the custom counter, but that of the special context environment.

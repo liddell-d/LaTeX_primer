@@ -1,0 +1,85 @@
+\section{Tables}
+
+There is a rich set of commands and options that support sophisticated tables. For most tables, however, a relatively simple environment suffices:
+
+\begin{verbatim}  
+   \begin{tabular}{<cols>} 
+     [\hline]
+     <text> & <text> & <text> \\
+     [\hline]
+     ...
+   \end{tabular}
+\end{verbatim}
+
+The \verb2<cols>2 block is comprised of the letters l, c, and r, which stand for left, center, or right justification of a column. Each column of the table must have its justification defined by one of these letters. Additionally, the ``\verb2|2'' character may appear in the \verb2<cols>2 block each time a vertical line is desired to set off a column in the table. The \verb2<text>2 blocks are where cell text appears. Each ``\&'' represents a column delimiter. The \verb2\\2 characters delimit rows. The \verb2\hline2 command can be used to insert horizontal lines that form row boundaries.
+
+The \verb2\cline{<m>-<n>}2 command may be used instead of \verb2\hline2 to insert a horizontal line that spans columns \q m\q\ through \q n\q. The \verb2\vline2 command draws a vertical line within a row at the location the command appears.
+
+Here is an example that uses all the basic table constructs:
+
+\begin{center}
+  \begin{tabular}{l||c|r|} \hline
+    leftward & center                & rightward\\
+    \cline{2-3}
+    left     & center \vline\ center & right\\
+    \cline{2-3}
+    left     & center                & right\\
+    \hline
+  \end{tabular}
+\end{center}
+
+Commonly, tables are made to float so whitespace usage can be optimized. (The same is true of figures. Collectively, tables and figures are often referred to as {\itshape floats}.) This allows tables to appear on other pages than where they appear to be defined on in the source code. 
+
+This uses the table environment:
+
+\begin{alltt}
+\ind\verb2\begin{table}2\q[\q[h][t][b][p]\q]\q 
+\ind\verb2  <header_text>\\2\q[\q<spacing>\q]\q
+\ind\verb2  \begin{tabular}{<cols>}2
+\ind  ...
+\ind\verb2  \end{tabular}\\2\q[\q<spacing>\q]\q
+\ind  <footer_text>
+\ind\verb2\end{table}2
+\end{alltt}
+
+There are many options that can be used to configure floats, and most of them are rather specialized. 
+
+The `h t b p' options control preferences for where the float should appear. These are short for here, top, bottom, and page. The \q h\q\ option means prefer the current location. The \q t\q\ and \q b\q\ options mean prefer the top and bottom of the current page, respectively. The \q p\q\ option means prefer a special page dedicated to floats. The default is \verb2[tbp]2.
+
+A numbered caption can be included using the following command:
+
+\begin{alltt}
+\ind\verb2\caption2\q[\q\verb2<short_title>2\q]\q\verb2{[\label{<target>}]<caption_text>}2
+\end{alltt}
+
+The \verb2<short_title>2 does not appear in the caption; it appears as the table title in a generated list of tables. The \verb2<caption_text>2 is the main caption text and may be rather long. It functions as the short title if \verb2<short_title>2 is omitted. The optional, but useful, \verb2\label2 command has a \verb2<target>2 string that can be used in \verb2\ref2 and \verb2\pageref2 commands to cross-reference the float's index number and page, respectively. 
+
+Caption text is center justified if it is on one line. Otherwise, it is set as a normal paragraph. The width can be controlled by placing the caption command in a \verb2\parbox2 or \verb2\minipage2 command.
+
+The caption appears before the table if the command is placed at the start of the float environment. It is placed after the table if it is placed at the end of the float environment.
+
+The float index number for captions is incremented every time a float is used, not when a caption is used. This means caption numbers may not be sequential if you don't consistently use captions. Interestingly, this behavior holds if you show a float environment as verbatim text (that is, no intent to show an actual table, but simply to show the syntax). To overcome this problem, you can use this command:
+
+\ind\verb2\addtocounter{table}{<number>}2
+
+where the number may be any integer. The number is added to the current index value to give the desired index value.
+
+The floating table code appears in the source code here, but the table in a generated file appears either at the top or bottom of the page.
+
+\addtocounter{table}{-1}
+
+  \begin{table}
+    \caption{Leading caption.}
+    \begin{center}
+      {\hspace*{-1.5in}\sffamily Floating Table Header} \\[1ex]
+      \begin{tabular}{l||c|r|} \hline
+        leftward & center                & rightward\\
+        \cline{2-3}
+        left     & center \vline\ center & right\\
+        \cline{2-3}
+        left     & center                & right\\
+        \hline
+      \end{tabular}\\[0.5ex]
+      {\hspace*{-2.25in} \sffamily Table Footer}
+    \end{center}
+  \end{table}

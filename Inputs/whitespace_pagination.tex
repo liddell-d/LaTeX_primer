@@ -1,0 +1,168 @@
+\section{Whitespace and Pagination Controls}
+
+Much of the generated document's horizontal whitespace is managed by the source preamble. In certain cases, it may be desirable to have some custom spacing at certain locations in the generated document. The following commands govern horizontal spacing. 
+
+\begin{tabular}{ll}
+\textsf{Command}           & \textsf{Description}\\
+\hline\\[-8pt]
+\verb2\frenchspacing2      & normal space after periods until overridden by \\
+                           & \verb2\nonfrenchspacing2.\\
+
+\verb2\nonfrenchspacing2   & extra space after periods not preceded by a capital\\
+                           &  letter; this is the default.\\
+
+\verb2\hspace{<spacing>}2  & horizontal space of \verb2<2spacing\verb2>2 width to the right;\\
+                           & ignored at start of an output line.\\
+
+\verb2\hspace*{<spacing>}2 & like \verb2\hspace2 but often more useful; \\
+                           & spacing is always applied.\\
+
+\verb2\quad2               & horizontal space equal to current typeface size.\\
+
+\verb2\qquad2              & double \verb2\quad2.\\
+
+\verb2\hfill2              & forces text on either side of command to the margins.
+\end{tabular}
+
+Vertical spacing is also largely managed by the preamble. Blank lines in the code cause paragraph breaks in the generated document. Consecutive blank lines in the code are treated as a single blank line.
+
+The following commands manage vertical whitespace:
+
+\begin{longtable}{ll}
+\textsf{Command}           & \textsf{Description}\\ 
+\hline\\[-8pt] \endhead
+\verb2\\[<space>]2         & inserts a newline within a paragraph with optional \\
+                           & additional \verb2<space>2 gap; permits page breaking \\
+                           & to occur, in which case vertical spacing isn't applied.\\
+
+\verb2\\*[<space>]2        & like \verb2\\2 but spacing never ignored.\\
+
+\verb2\newline2            & alias for \verb2\\2; both are ignored between paragraphs.\\
+
+\verb2\par2                & new paragraph, analogous to blank line; ignored on \\
+                           & its own line.\\
+
+\verb2\vspace{<spacing>}2  & similar to \verb2\hspace2 but applied vertically.\\
+
+\verb2\vspace*{<spacing>}2 & similar to \verb2\hspace*2 but applied vertically.\\
+
+\verb2\vfill2              & similar to \verb2\hfill2 but applied vertically.\\
+
+\verb2\linebreak[0-4]2     & similar to the \verb2\\2 commands except it justifies the \\
+                           & current line; default is 4, which forces a newline,  \\
+                           & while lesser values decrease the likelihood.\\
+
+\verb2\nolinebreak[0-4]2   & similar syntax and opposite semantics to \\
+                           & \verb2\linebreak2.\\                   
+
+\verb2\newpage2            & similar to \verb2\newline2 but applies to page breaking;\\
+                           & fills remainder of current page with whitespace.\\  
+\verb2\clearpage2          & similar to \verb2\newpage2 but forces floating figures and\\
+                           & tables onto subsequent pages before starting the\\
+                           & new page.\\              
+\verb2\pagebreak[0-4]2     & similar to \verb2\linebreak2 but applies to page breaking;\\
+                           & default is 4; takes effect at end of current line.\\
+\verb2\nopagebreak[0-4]2   & complement to \verb2\pagebreak2; similar to\\
+                           & \verb2\nopagebreak2.                         
+\end{longtable}
+
+By default, paragraphs are set off by indentation with no spacing between them. This can be changed to the inverse of both settings by using this command in the preamble:
+
+\ind\verb2\usepackage[parfill]{parskip}2
+
+It is also possible to use the \verb2\parskip2 and \verb2\parindent2 arguments to \verb2\setlength2 discussed earlier.
+
+The overall styles of pages are governed by these commands, which have some effect on whitespace:
+
+\ind\verb2\pagestyle{<style>}2\\
+\verb2   \thispagestyle{<style>}2
+
+The first command configures the global page style and is often used in the preamble. The second command configures a local page. Common styles are fancy (used with the \mbox{\emph{fancyheader}} package), plain, and empty. Use empty if you want a plain page without numbers.
+
+To keep paragraphs together so that they cannot appear on separate pages, the\\ \verb2\parbox[<pos>]{<width>}{<text>}2 command may be used. The \verb2\vbox2 command can also work, but it has some touchy behaviors like disabling the automatic insertion of a blank line before a paragraph, so it should be used with care. Both of these commands interfere with printing of footnotes within the paragraphs in the scope of the commands. In that case, \verb2\pagebreak2  is a better choice to force a paragraph to the next page.
+
+The \verb2\enlargethispage[*]{<size>}2 command can adjust the page height so that you can accommodate more text lines on a page. This allows a certain amount of page break control, which implies widow and orphan control, but it's not global. The non-* version of the command makes the printed area bigger (allows more lines without adjusting spacing). The~* version does the same thing and shrinks the interline spacing as needed to accommodate more text.
+
+Page numbering is controlled by this command:
+
+\ind\verb2\pagenumbering{<style>}2
+
+The standard style is ``arabic''. ``roman'' is also a common option. There are others.
+
+This command controls the starting index of pages:
+
+\ind\verb2\setcounter{page}{<number>}2
+
+
+\subsection{Indented and Offset Sections}
+
+Quotations can appear in indented sections and are specified with the \verb2\begin{quote}2 and \verb2\begin{quotation}2 environments. The former has no paragraph indentation but has separation. The latter has just the opposite. As with all environments, these are concluded with an \verb2\end{<env>}2 command. These environments may be nested to a depth of 6 ply, but 3 is a practical maximum.
+
+Lists are constructed in three different ways: bulleted, sequential, and descriptive. All lists are specified in an environment block similar to quotations mentioned in the preceding paragraph. The three environment names are: \verb2\itemize2, \verb2\enumerate2, and \verb2\description2. For the \verb2\itemize2 and \verb2\enumerate2 environments, each member of the list begins with \verb2\item2 as the first command on a line. In the case of the \verb2\description2 environment, each member begins with \verb2\item[<string>]2 where the string is an optional word or phrase that is typically followed by its definition. If you leave the string out, the brackets are also omitted. Like quotations, lists may be nested, but are limited to 4 ply rather than 6. Here is an example of single-item lists.
+
+\begin{itemize}
+  \item a bullet
+\end{itemize}
+
+\begin{enumerate}
+\item a trivial sequence
+  \begin{description}
+  \item[trivial] a nested trivial description
+  \end{description}
+\end{enumerate}
+
+Here is a description block that isn't nested:
+
+\begin{description}
+  \item[trivial] a trivial description
+\end{description}
+
+Both the \verb2\itemize2 and \verb2\enumerate2 environments have default characters that are used for the lists, and these characters change with the number of ply in the list. If you want to choose your own list labels, the \verb2\item2 command supports an optional label argument \verb2\item[<label>]2. Labels can be changed globally in the document for the two environments with this command:
+
+\begin{alltt}
+\ind\verb2\label{item|enum}{i|ii|iii|iv}2\q\{\q<label>\q\}\q
+\end{alltt}
+
+The unquoted braces are not literal. The roman numerals stand for the list ply level for which the specified label is used throughout the document. This command is usually nested in a \verb2\renewcommand2 declaration.
+
+\subsection{Boxes}
+
+Boxed text acts as a unit that can't broken up and can affect on how whitespace appears.
+
+The \verb2\makebox2 and \verb2\framebox2 commands, and their abbreviated versions, create horizontal blocks of text. The \verb2\mbox2 command is useful to prevent line breaking between words. \verb2\framebox2 puts a wire box around a block of text in addition to what \verb2\makebox2 does.
+
+The \verb2\raisebox2 command creates a vertically adjusted block of text and can be used to create superscripts and subscripts. 
+
+The \verb2\parbox2 command creates a vertical block of text with of a specified width. In essence, it creates a custom paragraph. A drawback is, it doesn't accept verbatim text. For that, you need a {\itshape minipage}.
+
+\begin{tabular}{ll}
+	\textsf{Box Commands}                    & \textsf{Description}\\
+	\hline\\[-8pt]
+	\verb2\mbox{<text>}2                     & centered text in a borderless box.\\
+	\verb2\makebox[<width>][<pos>]{<text>}2  & like \verb2\mbox2 but with width and \\
+	                                         & text alignment controls.\\
+	\verb2\fbox{<text>}2                     & centered, bordered box.\\
+	\verb2\framebox[<width>][<pos>]{<text>}2 & like \verb2\makebox2 but with border.\\
+	\verb2\raisebox{<lift>}{<text>}2         & raises or lowers text versus\\
+	                                         & the baseline.\\
+	\verb2\parbox[<pos>]{<width>}{<text>}2   & creates a custom paragraph\\
+	                                         & block.
+\end{tabular}
+
+The \verb2<pos>2 controls justification, which is centered by default. The values are l, r, and s, for left, right, and stretch to fit (fill). The \verb2<width>2 is a non-negative measurement value. The \verb2<lift>2 is positive to raise the box and negative to lower it.
+
+If you need more control over paragraph-like blocks of text, try the \verb2\minipage2 environment.
+
+\subsection{Footnotes}
+
+Footnotes are a type of box. The \verb2\footnote[<num>]{<text>}2 command works in the majority of cases. The index of the footnote is automatically incremented. The index counter can be manually adjusted with a number of commands discussed later (a common method is briefly discussed in the next section), and the index character can be as well.
+
+The main limitation of the \verb2\footnote2 command is, it can't be used in the box environments discussed earlier or in tables which are discussed later. If used inside a minipage, the footnote appears at the end of the minipage, not at the bottom of the page.
+
+For environments that don't support the standard \verb2\footnote2 command, the \\
+\verb2\footnotemark2 and \verb2\footnotetext2 commands can be used instead. These can achieve a number of customized footnote effects. Here is an example (see the code)\footnote{this is a standard footnote}: \fbox{this\footnotemark\ that\footnotemark}
+\addtocounter{footnote}{-1}\footnotetext{first box note}
+\stepcounter{footnote}\footnotetext{second box }
+
+
+

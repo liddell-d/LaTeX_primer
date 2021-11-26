@@ -1,0 +1,34 @@
+\section{Foundational Ideas}
+
+This document discusses foundational \LaTeX\ concepts. The content is chosen to get you up and running with many commonly-used \LaTeX\ features. 
+
+\LaTeX\ is a document preparation system. Part of that system is the \LaTeX\ document itself that you write or edit. That document (which we will often call the {\itshape source document}, or simply the {\itshape source}) consists of coded commands along with the content you want to communicate to your audience. The source document filename always has a {\itshape .tex} extension. The source for this document is the included {\itshape kopka\_daly.tex} file.\footnote{The inspiration for this content comes from {\itshape Guide to \LaTeX}, Fourth Edition, by Helmut Kopka and Patrick~W.~Daly.} You can study that file while reading this one to see how things are put together. 
+
+If you've ever worked with HTML or CSS, \LaTeX\ code has analogous features. As with HTML and CSS, your audience does not usually see your source. They see a document generated from it (which we will call the {\itshape generated document}), often in PDF or some other format that facilitates reading.
+
+The elementary structure of any source document's code is this:
+
+\begin{alltt}
+\ind\verb2\documentclass2[\q[\q<options>\q]\q]\verb2{<class>}2
+\ind[<global specifications>]
+\ind\verb2\begin{document}2
+\ind<body text and mark-up commands of local scope>
+\ind\verb2\end{document}2
+\end{alltt}
+
+A document's {\itshape class} determines the overall structure and the types of sections it includes. Some of the common ones are article, book, letter, and report. There are others, along with variations within these categories. This document is in the article class.
+
+There are numerous {\itshape options} that can be specified with \verb2\documentclass2. These occur in a comma-delimited list. Among the more common is the font size. The default is `10pt', with `11pt' and `12pt' being other choices. Page size is another common option. The default is `letterpaper', which is US letter size. There are numerous other choices, such as `portrait' (default) and `landscape' orientation, `oneside' (default) and `twoside' printing of pages, and so on.
+
+Everything before \verb2\begin{document}2 is called the preamble, which contains {\itshape global specifications}. These are commands that apply throughout the source unless overridden locally in the main body. Among the common global specifications are packages, which are configuration files that often have their own sets of unique commands that are not available if the package isn't loaded. Packages govern page layout structure, fonts, graphics, table and caption formats, footnote style, and so forth. Complete package descriptions and documentation are available from the CTAN website. 
+
+The syntax for loading packages is this:
+
+\begin{alltt}
+\ind\verb2\usepackage2[\q[\q<options>\q]\q]\verb2{<packages>]}2
+\end{alltt}
+
+Multiple options and packages appear in comma-delimited lists. If you  get an error when trying to load a package, you may have to add the package to your \LaTeX\ environment, as not all packages are necessarily present in your current installation.
+
+The main body of the source starts with \verb2\begin{document}2 and consists of the content you want the reader to see, along with markup commands that control how that content appears. The source concludes with \verb2\end{document}2.
+

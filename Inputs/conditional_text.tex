@@ -1,0 +1,36 @@
+\section{Conditional Text}
+
+It can be helpful to have text in the source document rendered only when certain conditions are true. A common example is when a generated document is intended for multiple audiences, but not all text is of interest to each audience. So selective rendering of the text in the generated document is desirable.
+
+To employ conditional text, the {\itshape ifthen} package can be loaded. This package enables these commands to be used:
+
+\begin{verbatim}
+   \ifthenelse{<test>}{<then_block>}{<else_block>}
+   \whiledo{<test>}{<do_block>}
+\end{verbatim}
+
+These behave similarly to if-then-else conditional blocks and while loops in programming languages. For either command, there is a test condition. For \verb2\ifthenelse2, the \linebreak\ $<$then\_block$>$ is executed if the test is true and the $<$else\_block$>$ otherwise. For \linebreak \verb2\whiledo2, the $<$do\_block$>$ is executed so long as the test is true. Within the body of the while script, one must alter a value that is tested so the loop will end.
+
+The Boolean commands are useful for setting up conditions to test:
+
+\begin{verbatim}
+   \newboolean{<name>}
+   \setboolean{<name>}{<value>}
+   \boolean{<name>}
+\end{verbatim}
+
+The first two commands initialize a Boolean flag and give it a truth value. The final command returns the value of a Boolean flag.
+
+The {\itshape equal} command can be used in conjunction with a Boolean flag:
+
+\ind\verb3\equal{<string1>}{<string2>}3 
+
+Here is an example:
+
+\begin{verbatim}
+   \newboolean{cond1}2
+   \setboolean{cond1}{true}2
+   \ifthenelse{\equal{\boolean{cond1}}{true}}
+     {This is printed.}
+     {This isn't.}
+\end{verbatim}

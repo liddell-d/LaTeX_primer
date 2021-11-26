@@ -1,0 +1,77 @@
+\section{Fonts}
+
+Fonts have these attributes: family, series, shape, size, and encoding. The first four attributes have some convenient high-level commands that are useful. These are the declarations and corresponding inline commands (defaults are out of the box defaults and can be overridden in the preamble): \begin{verbatim}
+
+   % family
+   \rmfamily \textrm{<text>}   % roman; default
+   \sffamily \textsf{<text>}   % sans serif; (why not ss or ssf?)
+   \ttfamily \texttt{<text>}   % monospace typewriter
+
+   % series
+   \mdseries \textmd{<text>}   % normal weight and expansion; 
+                               % default
+   \bfseries \textbf{<text>}   % bold \end{verbatim}
+
+\begin{verbatim}
+   %%% shape 
+   % upright; \textnormal defaults to this
+   \upshape \textup{<text>} \textnormal{<text>} 
+
+   % italics
+   \itshape \textit{<text>} \emph{<text>} {\em ...}
+   % \emph and \em toggle back and forth when nested      
+   % \itshape and \emph use italic space correction, 
+   % \textit does not
+
+   % slanted
+   \slshape \textsl{<text>}   
+
+   % small caps
+   \scshape \textsc{<text>}   
+
+   % size declarations
+   \normalsize % 10 pt by default; can be set to 11 or 12
+   \large % 12 pt
+   \Large % 14.4 pt
+   \small % 9 pt
+   \footnotesize % 8 pt
+\end{verbatim}
+
+The following text is an example of an unnamed environment. See the source code to understand how the commands are scoped:
+
+\ind{\Large this text is Large {\slshape and now slanted}}
+
+The preceding commands are actually built upon other lower level commands. These other commands have the form \verb2\font<attr>2, where \verb2<attr>2 is one of the  font attributes.\footnote{Pages 362-4 of Kopka and Daly cover these in detail.}
+
+The encoding selects the lookup table for the font. In essence, this sets the fundamental character forms that are printed. 
+
+The family sets the font properties such as serif (r for roman), sans serif (s/ss), or equal spacing (tt for typewriter). There are various names for the families, with the letters r, s, and t often giving hints as to what the family looks like.
+
+The series sets the weight and the width. The letter \q l\q\ for a weight means lighter than normal. The letter \q b\q\ means heavier than normal. The letter \q m\q\ means normal (think median). For \q l\q\ and \q b\q, these prefixes further modify the weight: s = semi (means less than \q l\q\ or \q b\q\ by themselves), e = extra, u = ultra. Width uses similar conventions, with \q m\q\ meaning normal, \q c\q\ meaning compressed, and \q x\q\ meaning expanded. Same modifiers as for weight apply. 
+
+The shape sets the angle or small caps. The letter \q n\q\ is normal, \q sl\q\ is slanted, \q it\q\ is italic, and \q  sc\q\ is small caps.\footnote{The book also shows a \q u\q\, which possibly means upright.}
+
+The size sets the height of the letter \q x\q\ in points, along with the vertical separation between lines in points. There are 12 preset values the pitch can take out of the box.\footnote{Other values may be added, but the book doesn't mention how.}
+
+If a font with all the specified attributes cannot be found, the tool issues a warning and says which attributes are used.
+
+As an example: 
+
+\begin{verbatim}
+   % defaults are OT1, cmr, mm, n, 10, and the default spacing
+   % OT1 is a font class. cmr is Computer Modern Roman,
+   % mm is probably median, n is upright, 10 is 10 pt.
+   % use Cork encoding; this expands on Knuth's original table
+   \fontencoding{T1} 
+   \fontfamily{cmss} % computer modern sans serif
+   \fontseries{sbm}  % semibold normal width
+   \fontshape{n}     % upright
+   \fontsize{14.4}{16} % 14.4 pt height, 16 pt space between lines
+   \selectfont % activates everything in preceding scope
+\end{verbatim}
+
+A more abbreviated command set is this: \begin{verbatim}
+   \usefont{T1}{cmss}{sbm}{n}
+   \fontsize{14.4}{16}
+   \selectfont % remains in effect until next \selectfont command
+\end{verbatim}

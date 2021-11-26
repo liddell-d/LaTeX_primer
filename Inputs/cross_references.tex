@@ -1,0 +1,50 @@
+\section{Cross-References and Links}
+
+Internal cross-references to locations and pages are specified using these commands:
+
+\begin{tabular}{ll}
+\textsf{Command}          & \textsf{Description}\\
+\hline\\[-10pt]
+\verb2\label{<target>}2   & a location in the text to reference by the \verb2<target>2\\
+                          & name.\\
+\verb2\pageref{<target>}2 & prints the page number of the \verb2<target>2 label.\\
+\verb2\ref{<target>}2     & prints the number or letter of environment context the\\
+                          & \verb2<target>2 label appears within.
+\end{tabular}
+
+A \verb2\label2 may be placed in any active portion of the source code. It references the location counter of that portion using the immediate context, such as a section, subsection, caption, and so forth. The \verb2<target>2 may contain any string, including one containing special characters. The \verb2\ref2 and \verb2\pageref2 commands can appear before or after the \verb2<target>2 they reference.
+
+As an example, at this location in the source there is a reference to section \ref{sec:color} on page \pageref{sec:color}.
+
+The {\itshape hyperref} package enables hypertext cross-references in the generated document. Enabling this package causes all cross-references to have red boxes drawn around them by default. This includes footnotes, \verb2\ref2, \verb2\pageref2, and any commands in the {\itshape hyper} family, among others. While this behavior is useful in draft documents to detect where links exist, it is ugly. For a production document, this command in the preamble makes for a less obtrusive presentation:
+\begin{verbatim}
+  usepackage[colorlinks=true,hyperfootnotes=false,linkcolor=blue
+  {hyperref}
+\end{verbatim}
+
+The {\itshape hyperref} package has a large number of options and enables numerous commands. The following are a subset of the complete group of commands.
+
+\begin{tabular}{ll}
+\textsf{Command} & \textsf{Description}\\
+\hline\\[-10pt]
+\verb2\href{<url>}{<text>}2         & creates a \verb2<text>2 hyperlink to\\
+                                    & the \verb2<url>2. \# and \& characters may be\\
+                                    & used in the URL.\\
+\verb2\hyperref[<target>]{<text>}2  & creates a \verb2<text>2 hyperlink to the\\
+                                    & \verb2<target>2 label.\\
+\verb2\hypertarget{<anchor>}{<text>}2 & defines \verb2<anchor>2 as an internal\\
+                                    & hyperlink target with the \verb2<text>2\\
+                                    & printed in the location of the target.\\
+                                    & the \verb2<text>2 may be empty.\\
+\verb2\hyperlink{<anchor>}{<text>}2 & creates an internal link to the\\
+                                    & \verb2<anchor>2 with the \verb2<text>2 used for\\
+                                    & the link.\\ 
+\verb2\hypersetup{<option>=<value>2 & sets any of the options of the\\
+\verb2  [,<option>=<value>...]}2    & {\itshape hyperref} package locally.                                   
+\end{tabular}
+
+As an example, at this location in the source, there is a \verb2\hyperref2 command cross-referencing \hyperref[sec:color]{the same target label} pointed to by the preceding \verb2\ref2 and \verb2\pageref2 commands.
+
+The {\itshape hyperref} usepackage option list offers limited selectivity over which types of cross-references create active links and the appearance of links by type. To work around these limitations, the \verb2\hypersetup2 command is useful for local overrides. In particular the {\itshape linkcolor} and {\itshape hidelinks} options can change the appearance of links on a case-by-case basis.
+
+For example, \verb2\hypersetup{hidelinks}2 is set in the source file here\hypersetup{hidelinks}, and this is how the preceding link text appears: ``\hyperref[sec:color]{the same target label}''.
