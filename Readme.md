@@ -5,6 +5,7 @@ LaTeX Primer.
 Initial version, July 2021.
 
 Updated April 2022 with minor changes.
+Updated March 2023 with correction to section 13.
 
 This directory consists of a primer based upon "Guide to LaTeX" by Helmut Kopka and Patrick W. Daly. The .tex files are in a ready-to-run configuration for PdfLaTeX and related rendering engines.
 
